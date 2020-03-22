@@ -1,0 +1,12 @@
+{
+  "name": "ceedcal",
+  "version": "0.0.1",
+  "description": "a simple calculator using quasar and vuejs",
+  "author": "ceed media",
+  "private": true,
+  "dependencies": {
+    "@capacitor/cli": "^1.0.0",
+    "@capacitor/core": "^1.0.0",
+    "@capacitor/ios": "^1.5.1"
+  }
+}

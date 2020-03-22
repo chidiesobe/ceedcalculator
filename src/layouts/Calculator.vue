@@ -29,11 +29,17 @@
 </template>
 
 <script>
+
 export default {
   name: "Calculator",
 
   data() {
-    return {};
+    return {
+      display: "",
+      operatorClicked: false,
+      operator: null,
+      previousClick: null
+    };
   },
   methods: {
     clear() {
@@ -43,20 +49,66 @@ export default {
       this.previousClick = null;
     },
 
-    getDigit(digit) {},
+    getDigit(digit) {
+      if (this.operatorClicked) {
+        this.display = "";
+        this.operatorClicked = false;
+      }
+      this.display += digit;
+    },
 
     // operators clicked
-    plusminus() {},
+    plusminus() {
+      if (this.display != "") {
+        this.display =
+          this.display.charAt(0) === "-"
+            ? this.display.slice(1)
+            : `-${this.display}`;
+      }
+    },
 
-    add() {},
-    percentage() {},
-    divide() {},
-    minus() {},
-    multiply() {},
+    add() {
+      this.operator = (a, b) => a + b;
+      this.previousClick = this.display;
+      this.operatorClicked = true;
+    },
+    percentage() {
+      this.display = parseFloat(this.display / 100);
+      this.previousClick = this.display;
+      this.operatorClicked = true;
+    },
+    divide() {
+      this.operator = (a, b) => a / b;
+      this.previousClick = this.display;
+      this.operatorClicked = true;
+    },
+    minus() {
+      this.operator = (a, b) => a - b;
+      this.previousClick = this.display;
+      this.operatorClicked = true;
+    },
+    multiply() {
+      this.operator = (a, b) => a * b;
+      this.previousClick = this.display;
+      this.operatorClicked = true;
+    },
 
-    dott() {},
+    dott() {
+      // checks if dot decimal has been added before adding it
+      if (this.display.indexOf(".") === -1) {
+        this.display += ".";
+      }
+    },
 
-    equal() {}
+    equal() {
+      if (this.previousClick != null && this.display != "") {
+        this.display = `${this.operator(
+          parseFloat(this.previousClick),
+          parseFloat(this.display)
+        )}`;
+        this.previousClick = null;
+      }
+    }
   }
 };
 </script>
